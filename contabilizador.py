@@ -25,11 +25,11 @@ def proceed():
 
     with pd.ExcelWriter("dbxlsx.xlsx", engine="openpyxl", mode="a", if_sheet_exists="replace") as writer:
         db.to_excel(writer, sheet_name="Faturamento", index=False)
-
+        
 
 
 n = 1
-nfim = 327
+nfim = 804
 i = 0
 
 
@@ -50,41 +50,98 @@ while i == 0:
 
                 for index, linha in enumerate(texto.splitlines()):
 
-                    if "789" in linha:
-            
-                        sku = index
-                        uni = index + 5
-                        preco = index + 7
+                    opt = 0
 
-                        prod = texto.splitlines()[sku].split()[0]
-                        print(prod)
-                        quant = int(texto.splitlines()[uni].split()[0])
-                        print(quant)
-                        valor = float((texto.splitlines()[preco].replace(".", "")).replace(",", "."))
-                        print(valor)
-                        NF = texto.splitlines()[34].split()[0]
+                    if "7898678207097" in linha:
+
+                        opt = 1
+
+                    if "TOR 1134"  in linha:
+
+                        opt = 2
+
+
+                    match opt:
+
+                        case 1:
+                            
+                            sku = index
+                            uni = index + 6
+                            preco = index + 8
+
+                            prod = texto.splitlines()[sku].split()[0]
+                            print(prod)
+                            quant = int(texto.splitlines()[uni].split()[0])
+                            print(quant)
+                            valor = float((texto.splitlines()[preco].replace(".", "")).replace(",", "."))
+                            print(valor)
+                            NF = texto.splitlines()[34].split()[0]
+                        
+
+                            proceed()
                     
 
-                        proceed()
+                        case 2:
+
+                            sku = index
+                            uni = index + 6
+                            preco = index + 7
+
+                            prod = texto.splitlines()[sku].split()[1]
+                            print(prod)
+                            quant = int(texto.splitlines()[uni].split()[0])
+                            print(quant)
+                            valor = float((texto.splitlines()[preco].replace(".", "")).replace(",", "."))
+                            print(valor)
+                            NF = texto.splitlines()[34].split()[0]
+                        
+
+                            proceed()
+                        
+
+                        case _:
+
+                            if "789" in linha:
+                        
+
+                                if "789," in linha:
+                                    continue
+                                
+
+                                else:
+                                        
+                                    sku = index
+                                    uni = index + 5
+                                    preco = index + 7
+
+                                    prod = texto.splitlines()[sku].split()[0]
+                                    print(prod)
+                                    quant = int(texto.splitlines()[uni].split()[0])
+                                    print(quant)
+                                    valor = float((texto.splitlines()[preco].replace(".", "")).replace(",", "."))
+                                    print(valor)
+                                    NF = texto.splitlines()[34].split()[0]
+                                
+
+                                    proceed()
 
 
-            print("Um arquivo finalizado " + NF)
 
-            db = pd.read_excel("dbxlsx.xlsx", sheet_name="Faturamento")
+                print("Um arquivo finalizado " + NF)
 
-            vendas = db.loc[db["Unidades"] == "Total", "Vendas"].values[0]
-            vendas = vendas + 1
+                db = pd.read_excel("dbxlsx.xlsx", sheet_name="Faturamento")
 
-            db.loc[db["Unidades"] == "Total", "Vendas"] = vendas
+                vendas = db.loc[db["Unidades"] == "Total", "Vendas"].values[0]
+                vendas = vendas + 1
+
+                db.loc[db["Unidades"] == "Total", "Vendas"] = vendas
 
 
+                with pd.ExcelWriter("dbxlsx.xlsx", engine="openpyxl", mode="a", if_sheet_exists="replace") as writer:
+                    db.to_excel(writer, sheet_name="Faturamento", index=False)
+        
 
-            with pd.ExcelWriter("dbxlsx.xlsx", engine="openpyxl", mode="a", if_sheet_exists="replace") as writer:
-                db.to_excel(writer, sheet_name="Faturamento", index=False)
-    
-
-            n = n + 1
-
+                n = n + 1
 
         else:
             
