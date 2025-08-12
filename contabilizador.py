@@ -23,13 +23,19 @@ def proceed():
 
 
 
+    nmvendasdb = db.loc[db["Produto"] == "$"+prod, "Num. Vendas"].values[0]
+    nv_nmvd = nmvendasdb + 1
+
+    db.loc[db['Produto'] == "$"+prod, 'Num. Vendas'] = nv_nmvd
+
+
     with pd.ExcelWriter("dbxlsx.xlsx", engine="openpyxl", mode="a", if_sheet_exists="replace") as writer:
         db.to_excel(writer, sheet_name="Faturamento", index=False)
         
 
 
 n = 1
-nfim = 804
+nfim = 845
 i = 0
 
 
@@ -131,10 +137,10 @@ while i == 0:
 
                 db = pd.read_excel("dbxlsx.xlsx", sheet_name="Faturamento")
 
-                vendas = db.loc[db["Unidades"] == "Total", "Vendas"].values[0]
+                vendas = db.loc[db["Unidades"] == "Total", "Num. Vendas"].values[0]
                 vendas = vendas + 1
 
-                db.loc[db["Unidades"] == "Total", "Vendas"] = vendas
+                db.loc[db["Unidades"] == "Total", "Num. Vendas"] = vendas
 
 
                 with pd.ExcelWriter("dbxlsx.xlsx", engine="openpyxl", mode="a", if_sheet_exists="replace") as writer:
