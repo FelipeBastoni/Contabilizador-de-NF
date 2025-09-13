@@ -1,13 +1,24 @@
 import fitz 
-import pandas as pd
+import pandas as pd 
 import os
+
+
+db = pd.read_excel("C:/Users/gesta/OneDrive/Documentos/dbxlsx.xlsx", sheet_name="Faturamento")
+
+
+db[["Valor", "Unidades", "Num. Vendas" ]] = 0
+
+db.loc[0,"Total"] = 0
+
+with pd.ExcelWriter("C:/Users/gesta/OneDrive/Documentos/dbxlsx.xlsx", engine="openpyxl", mode="a", if_sheet_exists="replace") as writer:
+    db.to_excel(writer, sheet_name="Faturamento", index=False)
 
 
 
 def proceed():
 
-    db = pd.read_excel("dbxlsx.xlsx", sheet_name="Faturamento")
-
+    db = pd.read_excel("C:/Users/gesta/OneDrive/Documentos/dbxlsx.xlsx", sheet_name="Faturamento")
+   
 
     valordb = db.loc[db["Produto"] == "$"+prod, "Valor"].values[0]
     nv_valor = valordb + valor
@@ -29,13 +40,13 @@ def proceed():
     db.loc[db['Produto'] == "$"+prod, 'Num. Vendas'] = nv_nmvd
 
 
-    with pd.ExcelWriter("dbxlsx.xlsx", engine="openpyxl", mode="a", if_sheet_exists="replace") as writer:
+    with pd.ExcelWriter("C:/Users/gesta/OneDrive/Documentos/dbxlsx.xlsx", engine="openpyxl", mode="a", if_sheet_exists="replace") as writer:
         db.to_excel(writer, sheet_name="Faturamento", index=False)
         
 
 
 n = 1
-nfim = 845
+nfim = 1522
 i = 0
 
 
@@ -113,6 +124,8 @@ while i == 0:
                                 if "789," in linha:
                                     continue
                                 
+                                if "0789" in linha:
+                                    continue
 
                                 else:
                                         
@@ -135,15 +148,15 @@ while i == 0:
 
                 print("Um arquivo finalizado " + NF)
 
-                db = pd.read_excel("dbxlsx.xlsx", sheet_name="Faturamento")
+                db = pd.read_excel("C:/Users/gesta/OneDrive/Documentos/dbxlsx.xlsx", sheet_name="Faturamento")
 
-                vendas = db.loc[db["Unidades"] == "Total", "Num. Vendas"].values[0]
+                vendas = db.loc[0, "Total"]
                 vendas = vendas + 1
 
-                db.loc[db["Unidades"] == "Total", "Num. Vendas"] = vendas
+                db.loc[0, "Total"] = vendas
 
 
-                with pd.ExcelWriter("dbxlsx.xlsx", engine="openpyxl", mode="a", if_sheet_exists="replace") as writer:
+                with pd.ExcelWriter("C:/Users/gesta/OneDrive/Documentos/dbxlsx.xlsx", engine="openpyxl", mode="a", if_sheet_exists="replace") as writer:
                     db.to_excel(writer, sheet_name="Faturamento", index=False)
         
 
