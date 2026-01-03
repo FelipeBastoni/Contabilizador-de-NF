@@ -13,7 +13,6 @@ j.resizable(False, False)
 #manipulações da interface
 
 
-
 def forget():
 
     txt3.place_forget()
@@ -25,11 +24,21 @@ def forget():
     txt9.place_forget()
     txt10.place_forget()
     txt11.place_forget()
+    txt12.place_forget()
+    txtdt1.place_forget()
+    txtdt2.place_forget()
+    txtdt3.place_forget()
     bt2.place_forget()
     bt3.place_forget()
+    selctdt.place_forget()
+    selctnf.place_forget()
     ent1.place_forget()
     ent2.place_forget()
     ent3.place_forget()
+
+    ent1.delete(0, 'end')
+    ent2.delete(0, 'end')
+    ent3.delete(0, 'end')
 
 
 
@@ -51,14 +60,46 @@ def rel():
     forget()
 
     txt7.place(x=20, y=30)
-    txt8.place(x=20, y=90)
-    txt9.place(x=260, y=90)
-    ent1.place(x=20, y=120)
-    ent2.place(x=260, y=120)
-    txt10.place(x=20, y=180)
-    ent3.place(x=20, y=210)
-    bt3.place(x=450, y=240)
-    txt11.place(x=20, y=280)
+    selctdt.place(x=20, y=60)
+    selctnf.place(x=200, y=60)
+    
+
+def data():
+
+    forget()
+
+    txt7.place(x=20, y=30)
+    selctdt.place(x=20, y=60)
+    selctnf.place(x=200, y=60)
+
+    txtdt1.place(x=20, y=120)
+    txtdt2.place(x=20, y=150)
+    txtdt3.place(x=260, y=150)
+    ent1.place(x=20, y=180)
+    ent2.place(x=260, y=180)
+    txt11.place(x=20, y=210)
+    ent3.place(x=20, y=240)
+    bt3.place(x=450, y=270)
+    txt12.place(x=20, y=300)
+
+
+def nota():
+
+    forget()
+
+    txt7.place(x=20, y=30)
+    selctdt.place(x=20, y=60)
+    selctnf.place(x=200, y=60)
+
+    txt8.place(x=20, y=120)
+    txt10.place(x=260, y=150)
+    txt9.place(x=20, y=150)
+    ent1.place(x=20, y=180)
+    ent2.place(x=260, y=180)
+    txt11.place(x=20, y=210)
+    ent3.place(x=20, y=240)
+    bt3.place(x=450, y=270)
+    txt12.place(x=20, y=300)
 
 
 
@@ -94,7 +135,7 @@ def gerar_relatorio():
 
     if nf_f < nf_i:
 
-        txt11.config(text="Status: O número da NF final tem que ser maior que o número da NF inicial")
+        txt12.config(text="Status: O número da NF final tem que ser maior que o número da NF inicial")
         
         return
 
@@ -104,11 +145,14 @@ def gerar_relatorio():
 
     if alert == True:
 
-        txt11.config(text="Status: Processo Finalizado")
+        txt12.config(text="Status: Processo Finalizado")
 
     else:
 
-        txt11.config(text="Status: Processo Falhou")
+        txt12.config(text="Status: Processo Falhou")
+
+
+
 
 
 
@@ -161,23 +205,53 @@ txt6 = tk.Label(frm2)
 
 #tela de Relatórios
 
-txt7 = tk.Label(frm2, text="Selecione a NF de início e a NF de fim")
+txt7 = tk.Label(frm2, text="Como você deseja filtrar?")
 
-txt8 = tk.Label(frm2, text="NF início:")
+selctdt = tk.Button(frm2, width=15, text="Data", command=data)
 
-txt9 = tk.Label(frm2, text="NF fim:")
+selctnf = tk.Button(frm2, width=15, text="Nota Fiscal", command=nota)
+
+
+
+
+
+
+
+
+
+
+
+
+#por data
+
+txtdt1 = tk.Label(frm2, text="Selecione a data de início e a data de fim")
+
+txtdt2 = tk.Label(frm2, text="Data inicial:")
+
+txtdt3 = tk.Label(frm2, text="Data Final:")
+
+
+
+#por nota fiscal
+
+
+txt8 = tk.Label(frm2, text="Selecione a NF de início e a NF de fim")
+
+txt9 = tk.Label(frm2, text="NF início:")
+
+txt10 = tk.Label(frm2, text="NF fim:")
 
 ent1 = tk.Entry(frm2, width=25)
 
 ent2 = tk.Entry(frm2, width=25)
 
-txt10 = tk.Label(frm2, text="Selecione o local (deixe em branco se não tiver algum específico)")
+txt11 = tk.Label(frm2, text="Selecione o local (deixe em branco se não tiver algum específico)")
 
 ent3 = tk.Entry(frm2)
 
 bt3 = tk.Button(frm2, text="Gerar relatório", command=gerar_relatorio)
 
-txt11 = tk.Label(frm2, text="Status: ")
+txt12 = tk.Label(frm2, text="Status: ")
 
 
 
