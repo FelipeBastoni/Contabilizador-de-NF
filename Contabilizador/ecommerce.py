@@ -54,7 +54,7 @@ def comput(nf_i, nf_f, loc):
 
     if loc == "":
 
-        local = ""
+        local = "Notas/"
 
     else:
 
@@ -185,4 +185,6 @@ def comput(nf_i, nf_f, loc):
 
             i = 1
 
+
     return True
+
