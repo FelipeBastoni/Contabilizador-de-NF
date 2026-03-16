@@ -207,8 +207,17 @@ def gerar_relatorio():
 
 
 
+def gerar_relatorio_xml():
 
+    alert = init()
 
+    if alert == True:
+
+        txt12.config(text="Status: Processo Finalizado")
+
+    else:
+
+        txt12.config(text="Status: Processo Falhou")
 
 
 
@@ -336,7 +345,7 @@ bt3 = tk.Button(frm2, text="Gerar relatório", command=gerar_relatorio)
 
 txt14 = tk.Label(frm2, text="selecione como você deseja filtrar")
 
-selctall = tk.Button(frm2, width=15, text="Todas", command=init)
+selctall = tk.Button(frm2, width=15, text="Todas", command=gerar_relatorio_xml)
 
 
 
